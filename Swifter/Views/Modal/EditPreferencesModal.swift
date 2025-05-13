@@ -41,67 +41,110 @@ struct EditPreferencesModal: View {
                         // Header
                         HStack {
                             Button(action: { isPresented = false }) {
-                                Image(systemName: "chevron.left")
-                                    .font(.title2)
+                                Text("Cancel")
+                                    
+                                    .font(.headline)
                                     .foregroundColor(.primary)
                             }
                             Spacer()
                             Text("Edit Preferences")
                                 .font(.headline)
                             Spacer()
+                            Button(action: { showSaveAlert = true }) {
+                                Text("Save")
+                                    
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                            }
+                            .alert(isPresented: $showSaveAlert) {
+                                Alert(
+                                    title: Text("Save Changes?"),
+                                    message: Text("Are you sure you want to save your preferences?"),
+                                    primaryButton: .default(Text("OK")) {
+                                        updatePreference()
+                                        onSave()
+                                        isPresented = false
+                                    },
+                                    secondaryButton: .cancel()
+                                )
+                            }
                         }
 
                         VStack(alignment: .leading, spacing: 20) {
                             // Avg Time On Feet Section
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("Avg Time On Feet (Required)")
-                                    .font(.subheadline)
-                                    .bold()
-                                
+                                HStack {
+                                    Text("Average Time On Feet")
+                                        .font(.subheadline)
+                                        .bold()
+                                    Text("*")
+                                        .foregroundColor(.red)
+                                    
+                                    Spacer()
+                                    
+                                    TimePickerButton(
+                                        value: $avgTimeOnFeet,
+                                        isShowingPicker: $showingAvgTimeOnFeetPicker,
+                                        minValue: 5,
+                                        maxValue: 120,
+                                        step: 5,
+                                        unit: "min",
+                                        onValueChange: updatePreference
+                                    )
+                                }
+                            
                                 // Modern time picker design
-                                TimePickerButton(
-                                    value: $avgTimeOnFeet,
-                                    isShowingPicker: $showingAvgTimeOnFeetPicker,
-                                    minValue: 5,
-                                    maxValue: 120,
-                                    step: 5,
-                                    unit: "minutes",
-                                    onValueChange: updatePreference
-                                )
+//                                TimePickerButton(
+//                                    value: $avgTimeOnFeet,
+//                                    isShowingPicker: $showingAvgTimeOnFeetPicker,
+//                                    minValue: 5,
+//                                    maxValue: 120,
+//                                    step: 5,
+//                                    unit: "minutes",
+//                                    onValueChange: updatePreference
+//                                )
                             }
 
                             // Avg Pre Jog Duration Section
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("Avg Pre Jog Duration")
-                                    .font(.subheadline)
-                                    .bold()
+                                HStack {
+                                    Text("Avg Pre Jog Duration")
+                                        .font(.subheadline)
+                                        .bold()
+                                    
+                                    Spacer()
+                                    
+                                    TimePickerButton(
+                                        value: $preJogDuration,
+                                        isShowingPicker: $showingPreJogDurationPicker,
+                                        minValue: 0,
+                                        maxValue: 60,
+                                        step: 5,
+                                        unit: "min",
+                                        onValueChange: updatePreference
+                                    )
+                                }
                                 
-                                TimePickerButton(
-                                    value: $preJogDuration,
-                                    isShowingPicker: $showingPreJogDurationPicker,
-                                    minValue: 0,
-                                    maxValue: 60,
-                                    step: 5,
-                                    unit: "minutes",
-                                    onValueChange: updatePreference
-                                )
+                               
                             }
 
                             // Avg Post Jog Duration Section
                             VStack(alignment: .leading, spacing: 10) {
-                                Text("Avg Post Jog Duration")
-                                    .font(.subheadline)
-                                    .bold()
-                                
-                                TimePickerButton(
-                                    value: $postJogDuration,
-                                    isShowingPicker: $showingPostJogDurationPicker,
-                                    minValue: 0,
-                                    maxValue: 60,
-                                    step: 5,
-                                    unit: "minutes",
-                                    onValueChange: updatePreference
-                                )
+                                HStack {
+                                    Text("Avg Post Jog Duration")
+                                        .font(.subheadline)
+                                        .bold()
+                                    Spacer()
+                                    TimePickerButton(
+                                        value: $postJogDuration,
+                                        isShowingPicker: $showingPostJogDurationPicker,
+                                        minValue: 0,
+                                        maxValue: 60,
+                                        step: 5,
+                                        unit: "min",
+                                        onValueChange: updatePreference
+                                        )
+                                }
                             }
                             
                             // Times of Day Section
@@ -121,6 +164,8 @@ struct EditPreferencesModal: View {
                                 }
                                 .padding(.bottom, 5)
                             }
+                            
+                            
                             
                             // Days of Week Section
                             VStack(alignment: .leading, spacing: 10) {
@@ -257,18 +302,18 @@ struct TimePickerButton: View {
                         .background(Color(UIColor.secondarySystemBackground))
                         .cornerRadius(10)
                     
-                    Spacer()
-                    
-                    Image(systemName: isShowingPicker ? "chevron.up" : "chevron.down")
-                        .foregroundColor(.primary)
-                        .font(.system(size: 14, weight: .medium))
-                        .frame(width: 30)
-                        .padding(.trailing, 8)
+//                    Spac
+//                    er()
+//                    Image(systemName: isShowingPicker ? "chevron.up" : "chevron.down")
+//                        .foregroundColor(.primary)
+//                        .font(.system(size: 14, weight: .medium))
+//                        .frame(width: 30)
+//                        .padding(.trailing, 8)
                 }
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color(.systemGray4), lineWidth: 1)
-                )
+//                .overlay(
+//                    RoundedRectangle(cornerRadius: 10)
+//                        .stroke(Color(.systemGray4), lineWidth: 1)
+//                )
             }
             .buttonStyle(PlainButtonStyle())
             
@@ -356,6 +401,33 @@ struct TimePickerView: View {
         .padding(12)
         .background(Color(UIColor.secondarySystemBackground))
         .cornerRadius(10)
+    }
+}
+
+struct TimePickerButton2: View {
+    @Binding var value: Int
+    @Binding var isShowingWheel: Bool
+    let minValue: Int
+    let maxValue: Int
+    let step: Int
+    let unit: String
+    let onValueChange: () -> Void
+    
+    var body: some View {
+        
+    }
+}
+
+struct WheelTimePicker: View {
+    @Binding var value: Int
+    let minValue: Int
+    let maxValue: Int
+    let step: Int
+    let unit: String
+    let onValueChange: () -> Void
+    
+    var body: some View {
+        
     }
 }
 
