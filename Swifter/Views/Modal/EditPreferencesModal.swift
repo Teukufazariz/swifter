@@ -316,9 +316,36 @@ struct TimePickerButton: View {
 //                )
             }
             .buttonStyle(PlainButtonStyle())
+            .sheet(isPresented: $isShowingPicker) {
+                NavigationView {
+                    VStack {
+                        TimePickerView2(
+                            value: $value,
+                            minValue: minValue,
+                            maxValue: maxValue,
+                            step: step,
+                            unit: unit,
+                            onValueChange: onValueChange
+                        )
+                        .padding()
+                        
+                        Spacer()
+                    }
+                    .navigationTitle("Select \(unit.capitalized)")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Done") {
+                                isShowingPicker = false
+                            }
+                        }
+                    }
+                }
+                .presentationDetents([.height(350), .medium])
+            }
             
             if isShowingPicker {
-                TimePickerView(
+                TimePickerView2(
                     value: $value,
                     minValue: minValue,
                     maxValue: maxValue,
@@ -404,30 +431,30 @@ struct TimePickerView: View {
     }
 }
 
-struct TimePickerButton2: View {
+struct TimePickerView2: View {
     @Binding var value: Int
-    @Binding var isShowingWheel: Bool
     let minValue: Int
     let maxValue: Int
     let step: Int
     let unit: String
     let onValueChange: () -> Void
     
-    var body: some View {
-        
+    private var availableValues: [Int] {
+        stride(from: minValue, through: maxValue, by: step).map { $0 }
     }
-}
-
-struct WheelTimePicker: View {
-    @Binding var value: Int
-    let minValue: Int
-    let maxValue: Int
-    let step: Int
-    let unit: String
-    let onValueChange: () -> Void
     
     var body: some View {
-        
+        VStack(spacing: 12) {
+            HStack {
+                Picker("Select \(unit)", selection: $value) {
+                    ForEach(availableValues, id: \.self) { timeValue in
+                        Text("\(timeValue)")
+                            .tag(timeValue)
+                    }
+                }
+                .pickerStyle(WheelPickerStyle())
+            }
+        }
     }
 }
 
