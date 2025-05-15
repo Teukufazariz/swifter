@@ -10,7 +10,7 @@ import SwiftData
 
 class PreferencesManager: ObservableObject {
     private let modelContext: ModelContext
-    
+
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
     }

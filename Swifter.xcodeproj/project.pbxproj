@@ -77,6 +77,14 @@
 			);
 			target = 7E6A02BE2D911FBB000EC773 /* Swifter */;
 		};
+		CB9BED862DD5DED90017525D /* Exceptions for "Swifter" folder in "SwifterAppIntents" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Models/PreferencesModel.swift,
+				ViewModels/Managers/PreferencesManager.swift,
+			);
+			target = CB9BED732DD5D16F0017525D /* SwifterAppIntents */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -84,6 +92,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				7E6A04702D93F8C5000EC773 /* Exceptions for "Swifter" folder in "Swifter" target */,
+				CB9BED862DD5DED90017525D /* Exceptions for "Swifter" folder in "SwifterAppIntents" target */,
 			);
 			path = Swifter;
 			sourceTree = "<group>";

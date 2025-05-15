@@ -358,7 +358,7 @@ struct TimesOfDaySelectionView: View {
                             }
                         }
                     }
-                    .listRowBackground(selectedTimes.contains(time) ? Color(.systemGray6) : nil)
+//                    .listRowBackground(selectedTimes.contains(time) ? Color(.systemGray6) : nil)
                 }
             }
             .listStyle(InsetGroupedListStyle())
@@ -413,7 +413,7 @@ struct DaysOfWeekSelectionView: View {
                             }
                         }
                     }
-                    .listRowBackground(selectedDays.contains(day) ? Color(.systemGray6) : nil)
+//                    .listRowBackground(selectedDays.contains(day) ? Color(.systemGray6) : nil)
                 }
             }
             .listStyle(InsetGroupedListStyle())
@@ -433,6 +433,7 @@ struct DaysOfWeekSelectionView: View {
                 }
             }
         }
+        .presentationDetents([.height(500), .medium])
     }
     
     private func toggleSelection(_ day: DayOfWeek) {
