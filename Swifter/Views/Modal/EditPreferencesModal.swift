@@ -10,13 +10,16 @@ struct EditPreferencesModal: View {
     @State private var selectedTimesOfDay: Set<TimeOfDay> = []
     @State private var selectedDaysOfWeek: Set<DayOfWeek> = []
     @State private var avgTimeOnFeet: Int = 30
-    @State private var preJogDuration: Int = 5
-    @State private var postJogDuration: Int = 5
+    @State private var preJogDuration: Int = 15
+    @State private var postJogDuration: Int = 15
     
     // States for time picker visibility
     @State private var showingAvgTimeOnFeetPicker = false
     @State private var showingPreJogDurationPicker = false
     @State private var showingPostJogDurationPicker = false
+    
+    @State private var showingTimesOfDayPicker = false
+    @State private var showingDaysOfWeekPicker = false
 
     @State private var showSaveAlert = false
 
@@ -50,24 +53,27 @@ struct EditPreferencesModal: View {
                             Text("Edit Preferences")
                                 .font(.headline)
                             Spacer()
-                            Button(action: { showSaveAlert = true }) {
-                                Text("Save")
-                                    
+                            Text("Cancel")
                                     .font(.headline)
-                                    .foregroundColor(.primary)
-                            }
-                            .alert(isPresented: $showSaveAlert) {
-                                Alert(
-                                    title: Text("Save Changes?"),
-                                    message: Text("Are you sure you want to save your preferences?"),
-                                    primaryButton: .default(Text("OK")) {
-                                        updatePreference()
-                                        onSave()
-                                        isPresented = false
-                                    },
-                                    secondaryButton: .cancel()
-                                )
-                            }
+                                    .opacity(0)
+//                            Button(action: { showSaveAlert = true }) {
+//                                Text("Save")
+//                                    
+//                                    .font(.headline)
+//                                    .foregroundColor(.primary)
+//                            }
+//                            .alert(isPresented: $showSaveAlert) {
+//                                Alert(
+//                                    title: Text("Save Changes?"),
+//                                    message: Text("Are you sure you want to save your preferences?"),
+//                                    primaryButton: .default(Text("OK")) {
+//                                        updatePreference()
+//                                        onSave()
+//                                        isPresented = false
+//                                    },
+//                                    secondaryButton: .cancel()
+//                                )
+//                            }
                         }
 
                         VStack(alignment: .leading, spacing: 20) {
@@ -147,22 +153,35 @@ struct EditPreferencesModal: View {
                                 }
                             }
                             
-                            // Times of Day Section
+                            // Times of Day Section - Now using NavigationLink
                             VStack(alignment: .leading, spacing: 10) {
                                 Text("Preferred Times of Day")
                                     .font(.subheadline)
                                     .bold()
-
-                                LazyVGrid(columns: columns, spacing: 8) {
-                                    ForEach(TimeOfDay.allCases) { time in
-                                        TimeButton(
-                                            title: time.rawValue,
-                                            isSelected: selectedTimesOfDay.contains(time),
-                                            action: { toggleTimeOfDay(time) }
-                                        )
+                                Button(action: {
+                                    showingTimesOfDayPicker = true
+                                }) {
+                                    HStack {
+                                        selectionSummaryText(for: selectedTimesOfDay.map { $0.rawValue })
+                                            .foregroundColor(.primary)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.gray)
                                     }
+                                    .padding(.vertical, 12)
+                                    .padding(.horizontal, 16)
+                                    .background(Color(UIColor.secondarySystemBackground))
+                                    .cornerRadius(10)
                                 }
-                                .padding(.bottom, 5)
+                                .sheet(isPresented: $showingTimesOfDayPicker) {
+                                    TimesOfDaySelectionView(
+                                        selectedTimes: $selectedTimesOfDay,
+                                        onSave: {
+                                            updatePreference()
+                                            showingTimesOfDayPicker = false
+                                        }
+                                    )
+                                }
                             }
                             
                             
@@ -172,18 +191,47 @@ struct EditPreferencesModal: View {
                                 Text("Preferred Days of the Week")
                                     .font(.subheadline)
                                     .bold()
-
-                                LazyVGrid(columns: columns, spacing: 8) {
-                                    ForEach(DayOfWeek.allCases) { day in
-                                        DayButton(
-                                            title: day.name.prefix(3),
-                                            isSelected: selectedDaysOfWeek.contains(day),
-                                            action: { toggleDayOfWeek(day) }
-                                        )
+                                Button(action: {
+                                    showingDaysOfWeekPicker = true
+                                }) {
+                                    HStack {
+                                        selectionSummaryText(for: selectedDaysOfWeek.map { $0.name })
+                                            .foregroundColor(.primary)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.gray)
                                     }
+                                    .padding(.vertical, 12)
+                                    .padding(.horizontal, 16)
+                                    .background(Color(UIColor.secondarySystemBackground))
+                                    .cornerRadius(10)
                                 }
-                                .padding(.bottom, 5)
+                                .sheet(isPresented: $showingDaysOfWeekPicker) {
+                                    DaysOfWeekSelectionView(
+                                        selectedDays: $selectedDaysOfWeek,
+                                        onSave: {
+                                            updatePreference()
+                                            showingDaysOfWeekPicker = false
+                                        }
+                                    )
+                                }
                             }
+//                            VStack(alignment: .leading, spacing: 10) {
+//                                Text("Preferred Days of the Week")
+//                                    .font(.subheadline)
+//                                    .bold()
+//
+//                                LazyVGrid(columns: columns, spacing: 8) {
+//                                    ForEach(DayOfWeek.allCases) { day in
+//                                        DayButton(
+//                                            title: day.name.prefix(3),
+//                                            isSelected: selectedDaysOfWeek.contains(day),
+//                                            action: { toggleDayOfWeek(day) }
+//                                        )
+//                                    }
+//                                }
+//                                .padding(.bottom, 5)
+//                            }
                         }
 
                         Button(action: {
@@ -230,6 +278,17 @@ struct EditPreferencesModal: View {
                 }
             }
     }
+    
+    private func selectionSummaryText(for items: [String]) -> Text {
+            if items.isEmpty {
+                return Text("None selected")
+                    .foregroundColor(.secondary)
+            } else if items.count <= 2 {
+                return Text(items.joined(separator: ", "))
+            } else {
+                return Text("\(items.count) selected")
+            }
+        }
 
     private func loadPreferenceData() {
         guard let preference = currentPreference else { return }
@@ -273,6 +332,115 @@ struct EditPreferencesModal: View {
             selectedDaysOfWeek.insert(day)
         }
         updatePreference()
+    }
+}
+
+// MARK: - Times of Day Selection View
+struct TimesOfDaySelectionView: View {
+    @Binding var selectedTimes: Set<TimeOfDay>
+    @Environment(\.dismiss) private var dismiss
+    var onSave: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(TimeOfDay.allCases) { time in
+                    Button(action: {
+                        toggleSelection(time)
+                    }) {
+                        HStack {
+                            Text(time.rawValue)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            if selectedTimes.contains(time) {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.accentColor)
+                            }
+                        }
+                    }
+                    .listRowBackground(selectedTimes.contains(time) ? Color(.systemGray6) : nil)
+                }
+            }
+            .listStyle(InsetGroupedListStyle())
+            .navigationTitle("Select Times")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        onSave()
+                    }
+                }
+            }
+        }
+        .presentationDetents([.height(350), .medium])
+    }
+    
+    private func toggleSelection(_ time: TimeOfDay) {
+        if selectedTimes.contains(time) {
+            selectedTimes.remove(time)
+        } else {
+            selectedTimes.insert(time)
+        }
+    }
+}
+
+// MARK: - Days of Week Selection View
+struct DaysOfWeekSelectionView: View {
+    @Binding var selectedDays: Set<DayOfWeek>
+    @Environment(\.dismiss) private var dismiss
+    var onSave: () -> Void
+    
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(DayOfWeek.allCases) { day in
+                    Button(action: {
+                        toggleSelection(day)
+                    }) {
+                        HStack {
+                            Text(day.name)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            if selectedDays.contains(day) {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.accentColor)
+                            }
+                        }
+                    }
+                    .listRowBackground(selectedDays.contains(day) ? Color(.systemGray6) : nil)
+                }
+            }
+            .listStyle(InsetGroupedListStyle())
+            .navigationTitle("Select Days")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        onSave()
+                    }
+                }
+            }
+        }
+    }
+    
+    private func toggleSelection(_ day: DayOfWeek) {
+        if selectedDays.contains(day) {
+            selectedDays.remove(day)
+        } else {
+            selectedDays.insert(day)
+        }
     }
 }
 
@@ -343,19 +511,19 @@ struct TimePickerButton: View {
                 }
                 .presentationDetents([.height(350), .medium])
             }
-            
-            if isShowingPicker {
-                TimePickerView2(
-                    value: $value,
-                    minValue: minValue,
-                    maxValue: maxValue,
-                    step: step,
-                    unit: unit,
-                    onValueChange: onValueChange
-                )
-                .padding(.top, 8)
-                .transition(.opacity)
-            }
+//            
+//            if isShowingPicker {
+//                TimePickerView2(
+//                    value: $value,
+//                    minValue: minValue,
+//                    maxValue: maxValue,
+//                    step: step,
+//                    unit: unit,
+//                    onValueChange: onValueChange
+//                )
+//                .padding(.top, 8)
+//                .transition(.opacity)
+//            }
         }
     }
 }
