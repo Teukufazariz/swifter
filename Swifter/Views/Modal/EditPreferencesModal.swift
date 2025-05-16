@@ -45,9 +45,8 @@ struct EditPreferencesModal: View {
                         HStack {
                             Button(action: { isPresented = false }) {
                                 Text("Cancel")
-                                    
                                     .font(.headline)
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(.red)
                             }
                             Spacer()
                             Text("Edit Preferences")
@@ -365,11 +364,11 @@ struct TimesOfDaySelectionView: View {
             .navigationTitle("Select Times")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
+//                ToolbarItem(placement: .navigationBarLeading) {
+//                    Button("Cancel") {
+//                        dismiss()
+//                    }
+//                }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
@@ -420,11 +419,11 @@ struct DaysOfWeekSelectionView: View {
             .navigationTitle("Select Days")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
+//                ToolbarItem(placement: .navigationBarLeading) {
+//                    Button("Cancel") {
+//                        dismiss()
+//                    }
+//                }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {

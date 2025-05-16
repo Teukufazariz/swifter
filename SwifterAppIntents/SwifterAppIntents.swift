@@ -25,6 +25,23 @@ enum EditAverageType: String, AppEnum {
     }
 }
 
+enum EditPreferredType: String, AppEnum {
+    case preferredDaysOfWeek, preferredTimesOfDay
+    
+    static var typeDisplayRepresentation: TypeDisplayRepresentation {
+        "Preferred Type"
+    }
+        
+    static var caseDisplayRepresentations: [EditPreferredType : DisplayRepresentation] {
+        [
+            .preferredDaysOfWeek: "Preferred Days of Week",
+            .preferredTimesOfDay: "Preferred Times of Day"
+        ]
+    }
+}
+
+
+
 struct SwifterAppIntents: AppIntent {
     static var title: LocalizedStringResource { "SwifterAppIntents" }
     
@@ -78,7 +95,7 @@ struct EditAverage: AppIntent {
         let modelContext = try ModelContainer(for: PreferencesModel.self).mainContext
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
-        if let preferences = preferencesManager.fetchPreferences() {
+        if preferencesManager.fetchPreferences() != nil {
             // Update the appropriate value based on the selected type
             switch editAverageType {
             case .preJogDuration:
@@ -103,6 +120,7 @@ struct EditAverage: AppIntent {
 
 
 struct EditPreferred: AppIntent {
+
     static var title: LocalizedStringResource { "Preferred" }
     
     func perform() async throws -> some IntentResult {
