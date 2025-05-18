@@ -648,6 +648,7 @@
 		CB9BED7F2DD5D16F0017525D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SwifterAppIntents/SwifterAppIntents.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UA7H73P97K;
@@ -674,6 +675,7 @@
 		CB9BED802DD5D16F0017525D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SwifterAppIntents/SwifterAppIntents.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UA7H73P97K;

@@ -266,7 +266,6 @@ struct EditPreferredTimes: AppIntent {
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
         if let preferences = preferencesManager.fetchPreferences() {
-            // Convert from TimeOfDayIntent to TimeOfDay
             let modelTimes: [TimeOfDay] = selectedTimes.compactMap { intentTime in
                 switch intentTime {
                 case .morning: return .morning
@@ -303,7 +302,6 @@ struct EditPreferredDays: AppIntent {
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
         if let preferences = preferencesManager.fetchPreferences() {
-            // Convert from DayOfWeekIntent to DayOfWeek
             let modelDays: [DayOfWeek] = selectedDays.compactMap { $0.toModelDay() }
             
             preferencesManager.setDaysOfWeek(daysOfWeek: modelDays)
