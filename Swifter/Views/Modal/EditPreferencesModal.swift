@@ -45,9 +45,8 @@ struct EditPreferencesModal: View {
                         HStack {
                             Button(action: { isPresented = false }) {
                                 Text("Cancel")
-                                    
                                     .font(.headline)
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(.red)
                             }
                             Spacer()
                             Text("Edit Preferences")
@@ -280,15 +279,75 @@ struct EditPreferencesModal: View {
     }
     
     private func selectionSummaryText(for items: [String]) -> Text {
-            if items.isEmpty {
-                return Text("None selected")
-                    .foregroundColor(.secondary)
-            } else if items.count <= 2 {
-                return Text(items.joined(separator: ", "))
-            } else {
-                return Text("\(items.count) selected")
-            }
+        // Check if empty
+        if items.isEmpty {
+            return Text("None selected")
+                .foregroundColor(.secondary)
         }
+        
+        // Check if this is days of week
+        let isDaysOfWeek = items.first?.contains("day") ?? false
+        
+        // Check if this is times of day
+        let isTimesOfDay = items.first?.contains("Morning") ?? false || 
+                           items.first?.contains("Noon") ?? false ||
+                           items.first?.contains("Afternoon") ?? false ||
+                           items.first?.contains("Evening") ?? false
+        
+        if isDaysOfWeek {
+            // Process days of week as before
+            let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+            let weekend = ["Saturday", "Sunday"]
+            let allDays = weekdays + weekend
+            
+            let sortedItems = items.sorted { day1, day2 in
+                let order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+                return order.firstIndex(of: day1)! < order.firstIndex(of: day2)!
+            }
+                    
+            if items.count == 7 || Set(items) == Set(allDays) {
+                return Text("Every day")
+            } else if Set(items) == Set(weekdays) {
+                return Text("Weekdays")
+            } else if Set(items) == Set(weekend) {
+                return Text("Weekends")
+            } else if items.count <= 6 {
+                // Abbreviate day names for small selections
+                let abbreviated = sortedItems.map { String($0.prefix(3)) }
+                return Text(abbreviated.joined(separator: ", "))
+            } else {
+                return Text("\(items.count) days")
+            }
+        } else if isTimesOfDay {
+            // Custom abbreviations for times of day
+            let abbreviations: [String: String] = [
+                "Morning": "Morn",
+                "Noon": "Noon", 
+                "Afternoon": "Aft",
+                "Evening": "Eve"
+            ]
+            
+            // Sort times of day in chronological order
+            let sortedItems = items.sorted { time1, time2 in
+                let order = ["Morning", "Noon", "Afternoon", "Evening"]
+                return order.firstIndex(of: time1)! < order.firstIndex(of: time2)!
+            }
+            
+            if items.count == 4 {
+                return Text("All day")
+            } else if items.count <= 3 {
+                // Use abbreviations for selected times
+                let abbreviated = sortedItems.map { abbreviations[$0] ?? $0 }
+                return Text(abbreviated.joined(separator: ", "))
+            } else {
+                return Text("\(items.count) times")
+            }
+        } else if items.count <= 2 {
+            return Text(items.joined(separator: ", "))
+        } else {
+            return Text("\(items.count) selected")
+        }
+    }
 
     private func loadPreferenceData() {
         guard let preference = currentPreference else { return }
@@ -358,18 +417,18 @@ struct TimesOfDaySelectionView: View {
                             }
                         }
                     }
-                    .listRowBackground(selectedTimes.contains(time) ? Color(.systemGray6) : nil)
+//                    .listRowBackground(selectedTimes.contains(time) ? Color(.systemGray6) : nil)
                 }
             }
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Select Times")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
+//                ToolbarItem(placement: .navigationBarLeading) {
+//                    Button("Cancel") {
+//                        dismiss()
+//                    }
+//                }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
@@ -413,18 +472,18 @@ struct DaysOfWeekSelectionView: View {
                             }
                         }
                     }
-                    .listRowBackground(selectedDays.contains(day) ? Color(.systemGray6) : nil)
+//                    .listRowBackground(selectedDays.contains(day) ? Color(.systemGray6) : nil)
                 }
             }
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Select Days")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
+//                ToolbarItem(placement: .navigationBarLeading) {
+//                    Button("Cancel") {
+//                        dismiss()
+//                    }
+//                }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
@@ -433,6 +492,7 @@ struct DaysOfWeekSelectionView: View {
                 }
             }
         }
+        .presentationDetents([.height(500), .medium])
     }
     
     private func toggleSelection(_ day: DayOfWeek) {

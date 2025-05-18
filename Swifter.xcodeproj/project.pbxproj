@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CB9BED7D2DD5D16F0017525D /* SwifterAppIntents.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = CB9BED742DD5D16F0017525D /* SwifterAppIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		7E6A02D02D911FBC000EC773 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -21,12 +25,34 @@
 			remoteGlobalIDString = 7E6A02BE2D911FBB000EC773;
 			remoteInfo = Swifter;
 		};
+		CB9BED7B2DD5D16F0017525D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E6A02B72D911FBB000EC773 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB9BED732DD5D16F0017525D;
+			remoteInfo = SwifterAppIntents;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CB9BED7E2DD5D16F0017525D /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				CB9BED7D2DD5D16F0017525D /* SwifterAppIntents.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7E6A02BF2D911FBB000EC773 /* Swifter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swifter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E6A02CF2D911FBC000EC773 /* SwifterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwifterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E6A02D92D911FBC000EC773 /* SwifterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwifterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB9BED742DD5D16F0017525D /* SwifterAppIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = SwifterAppIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -37,6 +63,28 @@
 			);
 			target = 7E6A02BE2D911FBB000EC773 /* Swifter */;
 		};
+		CB9BED822DD5D16F0017525D /* Exceptions for "SwifterAppIntents" folder in "SwifterAppIntents" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CB9BED732DD5D16F0017525D /* SwifterAppIntents */;
+		};
+		CB9BED842DD5D3760017525D /* Exceptions for "SwifterAppIntents" folder in "Swifter" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				SwifterAppIntents.swift,
+			);
+			target = 7E6A02BE2D911FBB000EC773 /* Swifter */;
+		};
+		CB9BED862DD5DED90017525D /* Exceptions for "Swifter" folder in "SwifterAppIntents" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Models/PreferencesModel.swift,
+				ViewModels/Managers/PreferencesManager.swift,
+			);
+			target = CB9BED732DD5D16F0017525D /* SwifterAppIntents */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -44,6 +92,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				7E6A04702D93F8C5000EC773 /* Exceptions for "Swifter" folder in "Swifter" target */,
+				CB9BED862DD5DED90017525D /* Exceptions for "Swifter" folder in "SwifterAppIntents" target */,
 			);
 			path = Swifter;
 			sourceTree = "<group>";
@@ -56,6 +105,15 @@
 		7E6A02DC2D911FBC000EC773 /* SwifterUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = SwifterUITests;
+			sourceTree = "<group>";
+		};
+		CB9BED752DD5D16F0017525D /* SwifterAppIntents */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CB9BED842DD5D3760017525D /* Exceptions for "SwifterAppIntents" folder in "Swifter" target */,
+				CB9BED822DD5D16F0017525D /* Exceptions for "SwifterAppIntents" folder in "SwifterAppIntents" target */,
+			);
+			path = SwifterAppIntents;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -82,6 +140,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CB9BED712DD5D16F0017525D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -91,6 +156,7 @@
 				7E6A02C12D911FBB000EC773 /* Swifter */,
 				7E6A02D22D911FBC000EC773 /* SwifterTests */,
 				7E6A02DC2D911FBC000EC773 /* SwifterUITests */,
+				CB9BED752DD5D16F0017525D /* SwifterAppIntents */,
 				7E6A02C02D911FBB000EC773 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,6 +167,7 @@
 				7E6A02BF2D911FBB000EC773 /* Swifter.app */,
 				7E6A02CF2D911FBC000EC773 /* SwifterTests.xctest */,
 				7E6A02D92D911FBC000EC773 /* SwifterUITests.xctest */,
+				CB9BED742DD5D16F0017525D /* SwifterAppIntents.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,10 +182,12 @@
 				7E6A02BB2D911FBB000EC773 /* Sources */,
 				7E6A02BC2D911FBB000EC773 /* Frameworks */,
 				7E6A02BD2D911FBB000EC773 /* Resources */,
+				CB9BED7E2DD5D16F0017525D /* Embed ExtensionKit Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CB9BED7C2DD5D16F0017525D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				7E6A02C12D911FBB000EC773 /* Swifter */,
@@ -176,6 +245,28 @@
 			productReference = 7E6A02D92D911FBC000EC773 /* SwifterUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		CB9BED732DD5D16F0017525D /* SwifterAppIntents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB9BED812DD5D16F0017525D /* Build configuration list for PBXNativeTarget "SwifterAppIntents" */;
+			buildPhases = (
+				CB9BED702DD5D16F0017525D /* Sources */,
+				CB9BED712DD5D16F0017525D /* Frameworks */,
+				CB9BED722DD5D16F0017525D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CB9BED752DD5D16F0017525D /* SwifterAppIntents */,
+			);
+			name = SwifterAppIntents;
+			packageProductDependencies = (
+			);
+			productName = SwifterAppIntents;
+			productReference = CB9BED742DD5D16F0017525D /* SwifterAppIntents.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -183,7 +274,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1620;
+				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					7E6A02BE2D911FBB000EC773 = {
@@ -196,6 +287,9 @@
 					7E6A02D82D911FBC000EC773 = {
 						CreatedOnToolsVersion = 16.2;
 						TestTargetID = 7E6A02BE2D911FBB000EC773;
+					};
+					CB9BED732DD5D16F0017525D = {
+						CreatedOnToolsVersion = 16.3;
 					};
 				};
 			};
@@ -216,6 +310,7 @@
 				7E6A02BE2D911FBB000EC773 /* Swifter */,
 				7E6A02CE2D911FBC000EC773 /* SwifterTests */,
 				7E6A02D82D911FBC000EC773 /* SwifterUITests */,
+				CB9BED732DD5D16F0017525D /* SwifterAppIntents */,
 			);
 		};
 /* End PBXProject section */
@@ -236,6 +331,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		7E6A02D72D911FBC000EC773 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB9BED722DD5D16F0017525D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -266,6 +368,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CB9BED702DD5D16F0017525D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -278,6 +387,11 @@
 			isa = PBXTargetDependency;
 			target = 7E6A02BE2D911FBB000EC773 /* Swifter */;
 			targetProxy = 7E6A02DA2D911FBC000EC773 /* PBXContainerItemProxy */;
+		};
+		CB9BED7C2DD5D16F0017525D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB9BED732DD5D16F0017525D /* SwifterAppIntents */;
+			targetProxy = CB9BED7B2DD5D16F0017525D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -406,6 +520,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Swifter/Swifter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Swifter/Preview Content\"";
@@ -436,6 +551,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Swifter/Swifter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Swifter/Preview Content\"";
@@ -529,6 +645,60 @@
 			};
 			name = Release;
 		};
+		CB9BED7F2DD5D16F0017525D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SwifterAppIntents/SwifterAppIntents.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UA7H73P97K;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwifterAppIntents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SwifterAppIntents;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "adeline-swiftUI-tutorial.Swifter.SwifterAppIntents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CB9BED802DD5D16F0017525D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SwifterAppIntents/SwifterAppIntents.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UA7H73P97K;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwifterAppIntents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SwifterAppIntents;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "adeline-swiftUI-tutorial.Swifter.SwifterAppIntents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -564,6 +734,15 @@
 			buildConfigurations = (
 				7E6A02EA2D911FBC000EC773 /* Debug */,
 				7E6A02EB2D911FBC000EC773 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB9BED812DD5D16F0017525D /* Build configuration list for PBXNativeTarget "SwifterAppIntents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB9BED7F2DD5D16F0017525D /* Debug */,
+				CB9BED802DD5D16F0017525D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
