@@ -187,7 +187,11 @@ struct EditPreJog: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult {
-        let modelContext = try ModelContainer(for: PreferencesModel.self).mainContext
+        let container = try ModelContainer(
+            for: PreferencesModel.self,
+            configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
+        )
+        let modelContext = container.mainContext
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
         if preferencesManager.fetchPreferences() != nil {
@@ -212,7 +216,11 @@ struct EditTimeOnFeet: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult {
-        let modelContext = try ModelContainer(for: PreferencesModel.self).mainContext
+        let container = try ModelContainer(
+            for: PreferencesModel.self,
+            configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
+        )
+        let modelContext = container.mainContext
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
         if preferencesManager.fetchPreferences() != nil {
@@ -237,7 +245,11 @@ struct EditPostJog: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult {
-        let modelContext = try ModelContainer(for: PreferencesModel.self).mainContext
+        let container = try ModelContainer(
+            for: PreferencesModel.self,
+            configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
+        )
+        let modelContext = container.mainContext
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
         if preferencesManager.fetchPreferences() != nil {
@@ -262,7 +274,11 @@ struct EditPreferredTimes: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult {
-        let modelContext = try ModelContainer(for: PreferencesModel.self).mainContext
+        let container = try ModelContainer(
+            for: PreferencesModel.self, // Ensures PreferencesModel schema is loaded
+            configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
+        )
+        let modelContext = container.mainContext
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
         if let preferences = preferencesManager.fetchPreferences() {
@@ -298,7 +314,11 @@ struct EditPreferredDays: AppIntent {
     
     @MainActor
     func perform() async throws -> some IntentResult {
-        let modelContext = try ModelContainer(for: PreferencesModel.self).mainContext
+        let container = try ModelContainer(
+            for: PreferencesModel.self, // Ensures PreferencesModel schema is loaded
+            configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
+        )
+        let modelContext = container.mainContext
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
         if let preferences = preferencesManager.fetchPreferences() {
