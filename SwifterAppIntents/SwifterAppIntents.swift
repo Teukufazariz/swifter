@@ -174,8 +174,8 @@ struct AppIntentShortcutProvider: AppShortcutsProvider {
     }
 }
 
-// 1. Pre-Jog Duration Intent
-struct EditPreJog: AppIntent {
+struct EditPreJog: AppIntent{
+    
     @Parameter(title: "Duration in Minutes")
     var duration: Int
     
@@ -186,21 +186,25 @@ struct EditPreJog: AppIntent {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult {
-        let modelContext = try ModelContainer(for: PreferencesModel.self).mainContext
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        let container = try ModelContainer(
+            for: PreferencesModel.self,
+            configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
+        )
+        let modelContext = container.mainContext
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
         if preferencesManager.fetchPreferences() != nil {
             preferencesManager.setPrejogTime(prejogTime: duration)
-            return .result(value: "Updated pre-jog duration to \(duration) minutes")
+            return .result(dialog: "Updated pre-jog duration to \(duration) minutes")
         } else {
             throw IntentError("Preferences not found")
         }
     }
 }
 
-// 2. Time on Feet Intent
-struct EditTimeOnFeet: AppIntent {
+struct EditTimeOnFeet: AppIntent{
+  
     @Parameter(title: "Duration in Minutes")
     var duration: Int
     
@@ -211,21 +215,25 @@ struct EditTimeOnFeet: AppIntent {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult {
-        let modelContext = try ModelContainer(for: PreferencesModel.self).mainContext
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        let container = try ModelContainer(
+            for: PreferencesModel.self,
+            configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
+        )
+        let modelContext = container.mainContext
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
         if preferencesManager.fetchPreferences() != nil {
             preferencesManager.setJogTime(timeOnFeet: duration)
-            return .result(value: "Updated jogging duration to \(duration) minutes")
+            return .result(dialog: "Updated jogging duration to \(duration) minutes")
         } else {
             throw IntentError("Preferences not found")
         }
     }
 }
 
-// 3. Post-Jog Duration Intent
-struct EditPostJog: AppIntent {
+struct EditPostJog: AppIntent{
+  
     @Parameter(title: "Duration in Minutes")
     var duration: Int
     
@@ -236,21 +244,26 @@ struct EditPostJog: AppIntent {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult {
-        let modelContext = try ModelContainer(for: PreferencesModel.self).mainContext
+    func perform() async throws -> some IntentResult & ProvidesDialog{
+        let container = try ModelContainer(
+            for: PreferencesModel.self,
+            configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
+        )
+        let modelContext = container.mainContext
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
         if preferencesManager.fetchPreferences() != nil {
             preferencesManager.setPostjogTime(postjogTime: duration)
-            return .result(value: "Updated post-jog duration to \(duration) minutes")
+            return .result(dialog: "Updated post-jog duration to \(duration) minutes")
         } else {
             throw IntentError("Preferences not found")
         }
     }
 }
 
-// 4. Preferred Times Intent
-struct EditPreferredTimes: AppIntent {
+struct EditPreferredTimes: AppIntent{
+    var value: Never?
+    
     @Parameter(title: "Select Times of Day", description: "Choose one or more preferred times")
     var selectedTimes: [TimeOfDayIntent]
     
@@ -261,8 +274,12 @@ struct EditPreferredTimes: AppIntent {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult {
-        let modelContext = try ModelContainer(for: PreferencesModel.self).mainContext
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        let container = try ModelContainer(
+            for: PreferencesModel.self,
+            configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
+        )
+        let modelContext = container.mainContext
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
         if let preferences = preferencesManager.fetchPreferences() {
@@ -278,15 +295,15 @@ struct EditPreferredTimes: AppIntent {
             preferencesManager.setTimesOfDay(timesOfDay: modelTimes)
             
             let timeNames = selectedTimes.map { $0.rawValue }.joined(separator: ", ")
-            return .result(value: "Updated preferred times to: \(timeNames)")
+            return .result(dialog: "Updated preferred times to: \(timeNames)")
         } else {
             throw IntentError("Preferences not found")
         }
     }
 }
 
-// 5. Preferred Days Intent
-struct EditPreferredDays: AppIntent {
+struct EditPreferredDays: AppIntent{
+  
     @Parameter(title: "Select Days of Week", description: "Choose one or more preferred days")
     var selectedDays: [DayOfWeekIntent]
     
@@ -297,8 +314,12 @@ struct EditPreferredDays: AppIntent {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult {
-        let modelContext = try ModelContainer(for: PreferencesModel.self).mainContext
+    func perform() async throws -> some IntentResult & ProvidesDialog{
+        let container = try ModelContainer(
+            for: PreferencesModel.self,
+            configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
+        )
+        let modelContext = container.mainContext
         let preferencesManager = PreferencesManager(modelContext: modelContext)
         
         if let preferences = preferencesManager.fetchPreferences() {
@@ -307,14 +328,13 @@ struct EditPreferredDays: AppIntent {
             preferencesManager.setDaysOfWeek(daysOfWeek: modelDays)
             
             let dayNames = selectedDays.map { $0.rawValue }.joined(separator: ", ")
-            return .result(value: "Updated preferred days to: \(dayNames)")
+            return .result(dialog: "Updated preferred days to: \(dayNames)")
         } else {
             throw IntentError("Preferences not found")
         }
     }
 }
 
-// Shared error struct
 struct IntentError: Swift.Error, CustomStringConvertible {
     let description: String
     init(_ description: String) { self.description = description }
