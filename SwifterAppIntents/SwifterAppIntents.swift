@@ -174,9 +174,7 @@ struct AppIntentShortcutProvider: AppShortcutsProvider {
     }
 }
 
-// 1. Pre-Jog Duration Intent
-struct EditPreJog: AppIntent, ProvidesDialog {
-    var value: Never?
+struct EditPreJog: AppIntent{
     
     @Parameter(title: "Duration in Minutes")
     var duration: Int
@@ -188,7 +186,7 @@ struct EditPreJog: AppIntent, ProvidesDialog {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult & ProvidesDialog {
         let container = try ModelContainer(
             for: PreferencesModel.self,
             configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
@@ -205,10 +203,8 @@ struct EditPreJog: AppIntent, ProvidesDialog {
     }
 }
 
-// 2. Time on Feet Intent
-struct EditTimeOnFeet: AppIntent, ProvidesDialog {
-    var value: Never?
-    
+struct EditTimeOnFeet: AppIntent{
+  
     @Parameter(title: "Duration in Minutes")
     var duration: Int
     
@@ -219,7 +215,7 @@ struct EditTimeOnFeet: AppIntent, ProvidesDialog {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult & ProvidesDialog {
         let container = try ModelContainer(
             for: PreferencesModel.self,
             configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
@@ -236,10 +232,8 @@ struct EditTimeOnFeet: AppIntent, ProvidesDialog {
     }
 }
 
-// 3. Post-Jog Duration Intent
-struct EditPostJog: AppIntent, ProvidesDialog {
-    var value: Never?
-    
+struct EditPostJog: AppIntent{
+  
     @Parameter(title: "Duration in Minutes")
     var duration: Int
     
@@ -250,7 +244,7 @@ struct EditPostJog: AppIntent, ProvidesDialog {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult & ProvidesDialog{
         let container = try ModelContainer(
             for: PreferencesModel.self,
             configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
@@ -267,8 +261,7 @@ struct EditPostJog: AppIntent, ProvidesDialog {
     }
 }
 
-// 4. Preferred Times Intent
-struct EditPreferredTimes: AppIntent, ProvidesDialog {
+struct EditPreferredTimes: AppIntent{
     var value: Never?
     
     @Parameter(title: "Select Times of Day", description: "Choose one or more preferred times")
@@ -281,9 +274,9 @@ struct EditPreferredTimes: AppIntent, ProvidesDialog {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult & ProvidesDialog {
         let container = try ModelContainer(
-            for: PreferencesModel.self, // Ensures PreferencesModel schema is loaded
+            for: PreferencesModel.self,
             configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
         )
         let modelContext = container.mainContext
@@ -309,10 +302,8 @@ struct EditPreferredTimes: AppIntent, ProvidesDialog {
     }
 }
 
-// 5. Preferred Days Intent
-struct EditPreferredDays: AppIntent, ProvidesDialog {
-    var value: Never?
-    
+struct EditPreferredDays: AppIntent{
+  
     @Parameter(title: "Select Days of Week", description: "Choose one or more preferred days")
     var selectedDays: [DayOfWeekIntent]
     
@@ -323,9 +314,9 @@ struct EditPreferredDays: AppIntent, ProvidesDialog {
     }
     
     @MainActor
-    func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult & ProvidesDialog{
         let container = try ModelContainer(
-            for: PreferencesModel.self, // Ensures PreferencesModel schema is loaded
+            for: PreferencesModel.self,
             configurations: ModelConfiguration(groupContainer: .identifier("group.swifter"))
         )
         let modelContext = container.mainContext
@@ -344,7 +335,6 @@ struct EditPreferredDays: AppIntent, ProvidesDialog {
     }
 }
 
-// Shared error struct
 struct IntentError: Swift.Error, CustomStringConvertible {
     let description: String
     init(_ description: String) { self.description = description }
