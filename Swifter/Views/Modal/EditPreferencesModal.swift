@@ -113,7 +113,7 @@ struct EditPreferencesModal: View {
                             // Avg Pre Jog Duration Section
                             VStack(alignment: .leading, spacing: 10) {
                                 HStack {
-                                    Text("Avg Pre Jog Duration")
+                                    Text("Average Pre Jog Duration")
                                         .font(.subheadline)
                                         .bold()
                                     
@@ -136,7 +136,7 @@ struct EditPreferencesModal: View {
                             // Avg Post Jog Duration Section
                             VStack(alignment: .leading, spacing: 10) {
                                 HStack {
-                                    Text("Avg Post Jog Duration")
+                                    Text("Average Post Jog Duration")
                                         .font(.subheadline)
                                         .bold()
                                     Spacer()
