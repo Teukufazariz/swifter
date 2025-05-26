@@ -175,7 +175,9 @@ struct AppIntentShortcutProvider: AppShortcutsProvider {
 }
 
 // 1. Pre-Jog Duration Intent
-struct EditPreJog: AppIntent {
+struct EditPreJog: AppIntent, ProvidesDialog {
+    var value: Never?
+    
     @Parameter(title: "Duration in Minutes")
     var duration: Int
     
@@ -196,7 +198,7 @@ struct EditPreJog: AppIntent {
         
         if preferencesManager.fetchPreferences() != nil {
             preferencesManager.setPrejogTime(prejogTime: duration)
-            return .result(value: "Updated pre-jog duration to \(duration) minutes")
+            return .result(dialog: "Updated pre-jog duration to \(duration) minutes")
         } else {
             throw IntentError("Preferences not found")
         }
@@ -204,7 +206,9 @@ struct EditPreJog: AppIntent {
 }
 
 // 2. Time on Feet Intent
-struct EditTimeOnFeet: AppIntent {
+struct EditTimeOnFeet: AppIntent, ProvidesDialog {
+    var value: Never?
+    
     @Parameter(title: "Duration in Minutes")
     var duration: Int
     
@@ -225,7 +229,7 @@ struct EditTimeOnFeet: AppIntent {
         
         if preferencesManager.fetchPreferences() != nil {
             preferencesManager.setJogTime(timeOnFeet: duration)
-            return .result(value: "Updated jogging duration to \(duration) minutes")
+            return .result(dialog: "Updated jogging duration to \(duration) minutes")
         } else {
             throw IntentError("Preferences not found")
         }
@@ -233,7 +237,9 @@ struct EditTimeOnFeet: AppIntent {
 }
 
 // 3. Post-Jog Duration Intent
-struct EditPostJog: AppIntent {
+struct EditPostJog: AppIntent, ProvidesDialog {
+    var value: Never?
+    
     @Parameter(title: "Duration in Minutes")
     var duration: Int
     
@@ -254,7 +260,7 @@ struct EditPostJog: AppIntent {
         
         if preferencesManager.fetchPreferences() != nil {
             preferencesManager.setPostjogTime(postjogTime: duration)
-            return .result(value: "Updated post-jog duration to \(duration) minutes")
+            return .result(dialog: "Updated post-jog duration to \(duration) minutes")
         } else {
             throw IntentError("Preferences not found")
         }
@@ -262,7 +268,9 @@ struct EditPostJog: AppIntent {
 }
 
 // 4. Preferred Times Intent
-struct EditPreferredTimes: AppIntent {
+struct EditPreferredTimes: AppIntent, ProvidesDialog {
+    var value: Never?
+    
     @Parameter(title: "Select Times of Day", description: "Choose one or more preferred times")
     var selectedTimes: [TimeOfDayIntent]
     
@@ -294,7 +302,7 @@ struct EditPreferredTimes: AppIntent {
             preferencesManager.setTimesOfDay(timesOfDay: modelTimes)
             
             let timeNames = selectedTimes.map { $0.rawValue }.joined(separator: ", ")
-            return .result(value: "Updated preferred times to: \(timeNames)")
+            return .result(dialog: "Updated preferred times to: \(timeNames)")
         } else {
             throw IntentError("Preferences not found")
         }
@@ -302,7 +310,9 @@ struct EditPreferredTimes: AppIntent {
 }
 
 // 5. Preferred Days Intent
-struct EditPreferredDays: AppIntent {
+struct EditPreferredDays: AppIntent, ProvidesDialog {
+    var value: Never?
+    
     @Parameter(title: "Select Days of Week", description: "Choose one or more preferred days")
     var selectedDays: [DayOfWeekIntent]
     
@@ -327,7 +337,7 @@ struct EditPreferredDays: AppIntent {
             preferencesManager.setDaysOfWeek(daysOfWeek: modelDays)
             
             let dayNames = selectedDays.map { $0.rawValue }.joined(separator: ", ")
-            return .result(value: "Updated preferred days to: \(dayNames)")
+            return .result(dialog: "Updated preferred days to: \(dayNames)")
         } else {
             throw IntentError("Preferences not found")
         }
