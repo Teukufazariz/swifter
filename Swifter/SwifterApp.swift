@@ -17,7 +17,7 @@ struct SwifterApp: App {
         container = try! ModelContainer(
             for: PreferencesModel.self,
                  GoalModel.self,
-                 SessionModel.self,        // ← no square brackets
+                 SessionModel.self,
             configurations: ModelConfiguration(
                 groupContainer: .identifier("group.swifter")
             )
@@ -30,7 +30,6 @@ struct SwifterApp: App {
       ContentView()
         .environmentObject(eventStoreManager)
     }
-    // Here we hand it our pre-built container:
     .modelContainer(container)
   }
 }

@@ -120,7 +120,7 @@ struct AppIntentShortcutProvider: AppShortcutsProvider {
                 "Update \(.applicationName) warm-up time", 
                 "Change \(.applicationName) preparation time"
             ],
-            shortTitle: "Edit Pre-Jog",
+            shortTitle: "Edit Pre-Jog Duration",
             systemImageName: "timer"
         )
         
@@ -132,7 +132,7 @@ struct AppIntentShortcutProvider: AppShortcutsProvider {
                 "Update \(.applicationName) time on feet", 
                 "Change \(.applicationName) run length"
             ],
-            shortTitle: "Edit Time on Feet",
+            shortTitle: "Edit Jogging Duration",
             systemImageName: "figure.run.circle.fill"
         )
         
@@ -144,7 +144,7 @@ struct AppIntentShortcutProvider: AppShortcutsProvider {
                 "Update \(.applicationName) cool down time", 
                 "Change \(.applicationName) recovery time"
             ],
-            shortTitle: "Edit Post-Jog",
+            shortTitle: "Edit Post-Jog Duration",
             systemImageName: "timer.circle"
         )
         
@@ -156,7 +156,7 @@ struct AppIntentShortcutProvider: AppShortcutsProvider {
                 "Change when I jog in \(.applicationName)", 
                 "Set my jogging time preferences in \(.applicationName)"
             ],
-            shortTitle: "Edit Times",
+            shortTitle: "Edit Times of Day",
             systemImageName: "clock"
         )
         
@@ -168,7 +168,7 @@ struct AppIntentShortcutProvider: AppShortcutsProvider {
                 "Change which days I jog in \(.applicationName)", 
                 "Set my preferred jogging days in \(.applicationName)"
             ],
-            shortTitle: "Edit Days",
+            shortTitle: "Edit Preferred Days",
             systemImageName: "calendar"
         )
     }
